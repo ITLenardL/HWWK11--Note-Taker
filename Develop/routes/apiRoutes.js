@@ -1,5 +1,6 @@
 const fs = require("fs");
-const notesData = require('../db/db');
+const notesData = require("../db/db");
+
 
 module.exports = (app) => {
 
@@ -15,15 +16,19 @@ module.exports = (app) => {
     fs.writeFileSync("./db/db.json", JSON.stringify(data), function(err) {
         if (err) throw (err);        
     }); 
-
-    res.json(data); 
+    res.json("saved"); 
   });
 
-  app.post('/api/clear', (req, res) => {
-    // Empty out the arrays of data
-    tableData.length = 0;
-    waitListData.length = 0;
-
-    res.json({ ok: true });
+  app.delete("/api/notes/:id", function (req, res) {
+    let elem = parseInt(req.params.id);
+    let tempNotes = [];
+    for (var i = 0; i < notesData.length; i++) {
+      if (i !== elem) {
+        tempNotes.push(notesData[i]);
+      }
+    }
+    notesData = tempNotes;
+    res.json("deleted");
   });
 };
+
