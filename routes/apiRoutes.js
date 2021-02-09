@@ -8,6 +8,7 @@ let databaseFile = path.join(__dirname, '../db/db.json');
 
 app.get('/api/notes', function(req, res) {
   res.json(db);
+  console.log("Notes read")
 });
 
 app.post('/api/notes', function(req, res) {
